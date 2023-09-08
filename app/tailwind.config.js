@@ -11,6 +11,7 @@ export default {
         que: "'Quiel', sans-serif",
         abs: "'Italiana', serif",
         sor: "'Sora', sans-serif",
+        est: "'Esteban', serif",
       }
     },
   },
