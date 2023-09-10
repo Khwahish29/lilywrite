@@ -11,3 +11,5 @@ compile:; forge compile
 test :; forge test 
 snapshot :; forge snapshot
 format :; forge fmt
+
+deploy-testnet :; forge script script/DeployLilyWrite.s.sol --rpc-url $(RPC_URL) --broadcast --private-key $(PRIVATE_KEY)
