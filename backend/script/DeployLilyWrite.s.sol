@@ -4,4 +4,14 @@ pragma solidity 0.8.19;
 import {Script} from "forge-std/Script.sol";
 import {LilyWrite} from "../src/LilyWrite.sol";
 
-contract DeployLilyWrite is Script {}
+contract DeployLilyWrite is Script {
+
+    address constant LilypadEvents_SEPOLIA =  0xdC7612fa94F098F1d7BB40E0f4F4db8fF0bC8820;
+
+    function run() public returns(LilyWrite) {
+        vm.startBroadcast();
+        LilyWrite lilywrite = new LilyWrite(LilypadEvents_SEPOLIA);
+        vm.stopBroadcast();
+        return lilywrite;
+    }
+}

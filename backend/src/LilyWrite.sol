@@ -39,7 +39,7 @@ contract LilyWrite is ERC721 {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIdCounter;
 
-    uint256 constant private BUY_PRICE = 0.01 ether;
+    //uint256 constant private BUY_PRICE = 0.01 ether;
     uint256 private lilyPadFee;
     address private bridgeAddress;
 
@@ -79,13 +79,13 @@ contract LilyWrite is ERC721 {
     }
 
     function buyLWTokens() external payable {
-        require(msg.value >= BUY_PRICE, "Send enough tokens!");
+        //require(msg.value >= BUY_PRICE, "Send enough tokens!");
         _LWToken.mint(msg.sender, 5e18);
     }
 
     function generatePoem(string calldata _prompt) external payable {
         require(msg.value >= lilyPadFee, "Not enough to run Lilypad job");
-        _LWToken.transferFrom(msg.sender, address(this), 1e18);
+        //_LWToken.transferFrom(msg.sender, address(this), 1e18);
         string memory spec = string.concat(specStart, _prompt, specEnd);
         uint256 id = bridge.runLilypadJob{value: lilyPadFee}(address(this), spec, uint8(LilypadResultType.CID));
         require(id > 0, "job didn't return a value");

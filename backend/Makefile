@@ -12,4 +12,6 @@ test :; forge test
 snapshot :; forge snapshot
 format :; forge fmt
 
-deploy-testnet :; forge script script/DeployLilyWrite.s.sol --rpc-url $(RPC_URL) --broadcast --private-key $(PRIVATE_KEY)
+deploy-sepolia :; forge script script/DeployLilyWrite.s.sol --rpc-url $(RPC_URL) --broadcast --private-key $(PRIVATE_KEY)
+
+test-sepolia :; forge test --fork-url $(RPC_URL)
