@@ -6,11 +6,11 @@ import {LilyWrite} from "../src/LilyWrite.sol";
 
 contract DeployLilyWrite is Script {
 
-    address constant LilypadEvents_SEPOLIA =  0xdC7612fa94F098F1d7BB40E0f4F4db8fF0bC8820;
+    address constant LilypadEvents =  0xdC7612fa94F098F1d7BB40E0f4F4db8fF0bC8820;
 
     function run() public returns(LilyWrite) {
         vm.startBroadcast();
-        LilyWrite lilywrite = new LilyWrite(LilypadEvents_SEPOLIA);
+        LilyWrite lilywrite = new LilyWrite(LilypadEvents);
         vm.stopBroadcast();
         return lilywrite;
     }
