@@ -1,27 +1,5 @@
 // SPDX-License-Identifier: MIT
 
-// Layout of Contract:
-// version
-// imports
-// errors
-// interfaces, libraries, contracts
-// Type declarations
-// State variables
-// Events
-// Modifiers
-// Functions
-
-// Layout of Functions:
-// constructor
-// receive function (if exists)
-// fallback function (if exists)
-// external
-// public
-// internal
-// private
-// internal & private view & pure functions
-// external & public view & pure functions
-
 pragma solidity 0.8.19;
 import {console} from "forge-std/Test.sol";
 import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
@@ -72,10 +50,10 @@ contract LilyWrite is ERC721 {
     event Cancelled(address _from, uint _jobId, string _errorMsg);
 
     constructor(address _bridgeAddress) ERC721("LilyWrite", "LW") {
-        _LWToken = new LWToken("LWToken", "LW");
         bridgeAddress = _bridgeAddress;
         bridge = LilypadEventsUpgradeable(_bridgeAddress);
         lilyPadFee = bridge.getLilypadFee();
+        _LWToken = new LWToken("LWToken", "LW");
     }
 
     function buyLWTokens() external payable {
@@ -85,7 +63,7 @@ contract LilyWrite is ERC721 {
 
     function generatePoem(string calldata _prompt) external payable {
         require(msg.value >= lilyPadFee, "Not enough to run Lilypad job");
-        _LWToken.transferFrom(msg.sender, address(this), 1e18);
+        //_LWToken.transferFrom(msg.sender, address(this), 1e18);
         string memory spec = string.concat(specStart, _prompt, specEnd);
         uint256 id = bridge.runLilypadJob{value: lilyPadFee}(address(this), spec, uint8(LilypadResultType.CID));
         require(id > 0, "job didn't return a value");
@@ -109,7 +87,6 @@ contract LilyWrite is ERC721 {
         delete idToUser[_jobId];
         emit Fulfilled(_from, _jobId, _resultType, _result);
     }
-    //removed override
 
     function lilypadCancelled(address _from, uint _jobId, string calldata _errorMsg) external {
         require(_from == address(bridge));
@@ -119,7 +96,6 @@ contract LilyWrite is ERC721 {
         delete idToUser[_jobId];
         emit Cancelled(_from, _jobId, _errorMsg);
     }
-    //removed override
 
     function setBridgeAddress(address _bridgeAddress) external {
         bridgeAddress = _bridgeAddress;
@@ -132,5 +108,9 @@ contract LilyWrite is ERC721 {
     function _getLilyPadFee() public view returns(uint256) {
         uint256 fee = bridge.getLilypadFee();
         return fee;
+    }
+
+    function _getLWToken() public view returns(LWToken) {
+        return _LWToken;
     }
 }
