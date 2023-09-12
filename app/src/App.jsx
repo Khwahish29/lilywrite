@@ -2,6 +2,8 @@ import { useState } from 'react'
 import Landing from './components/Landing'
 import Navbar from './components/Navbar'
 import Shop from './components/Shop'
+import Explore from './components/Explore'
+import Create from './components/Create'
 function App() {
   return (
       <div className='min-h-screen' style={{
@@ -12,7 +14,7 @@ function App() {
         radial-gradient(at 100% 97%, rgb(244, 114, 182) 0, transparent 22%)`
       }}>
         <Navbar />
-        <Landing />
+        <Create />
       </div>
   )
 }
