@@ -12,14 +12,16 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 
 contract LilyWrite is ERC721, ERC721URIStorage {
 
+    LilypadEventsUpgradeable private bridge;
+    LWToken private _LWToken;
+
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIdCounter;
 
     uint256 constant private BUY_PRICE = 0.01 ether;
     uint256 private lilyPadFee;
     address private bridgeAddress;
-    LilypadEventsUpgradeable private bridge;
-    LWToken private _LWToken;
+    
     string public latestResult;
     string public latestError;
 
@@ -123,7 +125,7 @@ contract LilyWrite is ERC721, ERC721URIStorage {
         return _LWToken;
     }
 
-    // The following functions are overrides required by Solidity.
+    //The following functions are overrides required by Solidity.
     function _burn(uint256 tokenId) internal override(ERC721, ERC721URIStorage) {
         super._burn(tokenId);
     }
