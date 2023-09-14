@@ -19,8 +19,14 @@ contract LilyWriteTest is Test {
     }
 
     function testJobShouldReturnAValue() public {
+        vm.startPrank(USER);
+        vm.deal(USER, 1 ether);
+        lilywrite.buyLWTokens{value: 0.01 ether}();
+        LWToken token = LWToken(lilywrite._getLWToken());
+        token.approve(address(lilywrite), 1e18);
         uint256 fee = lilywrite._getLilyPadFee();
         lilywrite.generatePoem{value : fee}(prompt);
+        vm.stopPrank();
     }
     function testCanBuyLwTokens() public {
         vm.prank(USER);
@@ -34,5 +40,9 @@ contract LilyWriteTest is Test {
         LWToken token = lilywrite._getLWToken();
         vm.expectRevert();
         token.mint(USER, 5e18);
+    }
+    function testFeeShouldMatch() public {
+        uint256 fee = lilywrite._getLilyPadFee();
+        assertEq(fee, 40000000000000000);
     }
 }

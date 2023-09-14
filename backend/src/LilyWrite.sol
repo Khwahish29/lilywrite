@@ -4,15 +4,13 @@ pragma solidity 0.8.19;
 import {console} from "forge-std/Test.sol";
 import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import {ERC721} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import {ERC721URIStorage} from "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import {LilypadEventsUpgradeable} from "./imports/LilypadEventsUpgradeable.sol";
 import {LWToken} from "./LWToken.sol";
 import "./imports/LilypadCallerInterface.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-contract LilyWrite is ERC721 {
-
-    LilypadEventsUpgradeable private bridge;
-    LWToken private _LWToken;
+contract LilyWrite is ERC721, ERC721URIStorage {
 
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIdCounter;
@@ -20,6 +18,10 @@ contract LilyWrite is ERC721 {
     uint256 constant private BUY_PRICE = 0.01 ether;
     uint256 private lilyPadFee;
     address private bridgeAddress;
+    LilypadEventsUpgradeable private bridge;
+    LWToken private _LWToken;
+    string public latestResult;
+    string public latestError;
 
     mapping(uint256 => string) idToPrompt;
     mapping(uint256 => address) idToUser;
@@ -32,19 +34,28 @@ contract LilyWrite is ERC721 {
     Poem[] private poems;
 
     string constant specStart = '{'
-        '"Engine": "docker",'
-        '"Verifier": "noop",'
-        '"PublisherSpec": {"Type": "estuary"},'
-        '"Docker": {'
-        '"Image": "ghcr.io/bacalhau-project/examples/stable-diffusion-gpu:0.0.1",'
-        '"Entrypoint": ["python", "main.py", "--o", "./outputs", "--p", "';
+      ' "Engine": "Docker" ,'
+      ' "Verifier": "Noop" ,'
+      ' "Publisher": "Estuary" ,'
+      ' "PublisherSpec": { '
+      '  "Type": "Estuary" '
+      ' }, '
+      ' "Docker": { '
+        ' "Image": "jsacex/dolly_inference:latest",'
+        ' "Entrypoint": [ "python", "inference.py", "--prompt"," ';
 
-    string constant specEnd =
-        '"]},'
-        '"Resources": {"GPU": "1"},'
-        '"Outputs": [{"Name": "outputs", "Path": "/outputs"}],'
-        '"Deal": {"Concurrency": 1}'
-        '}';
+    string constant specEnd = ' ", '
+      '  "--model_version", "./databricks/dolly-v2-3b" ],'
+      ' "WorkingDirectory": "/inputs" },'
+      ' "Language": {"JobContext": {}},'
+      ' "Wasm": {"EntryModule": {}},'
+      ' "Resources": {"GPU": "1"},'
+      ' "Network": {"Type": "None"},'
+      ' "Timeout": 1800,'
+      ' "inputs": [{"StorageSource": "RepoCloneLFS", "Name": "gitlfs://huggingface.co/databricks/dolly-v2-3b.git", "Repo": "https://huggingface.co/databricks/dolly-v2-3b.git", "path": "/inputs"},'
+      '  {"StorageSource": "URLDownload", "Name": "https://gist.githubusercontent.com/js-ts/d35e2caa98b1c9a8f176b0b877e0c892/raw/3f020a6e789ceef0274c28fc522ebf91059a09a9/inference.py", "URL": "https://gist.githubusercontent.com/js-ts/d35e2caa98b1c9a8f176b0b877e0c892/raw/3f020a6e789ceef0274c28fc522ebf91059a09a9/inference.py", "path": "/inputs"}],'
+      ' "outputs": [{"StorageSource": "IPFS", "Name": "outputs", "path": "/outputs"}],'
+      ' "Deal": {"Concurrency": 1}}';
 
     event Fulfilled(address _from, uint256 _jobId, LilypadResultType _resultType, string _result);
     event Cancelled(address _from, uint _jobId, string _errorMsg);
@@ -79,6 +90,7 @@ contract LilyWrite is ERC721 {
             result: _result
         });
         poems.push(poem);
+        latestResult = _result;
         address user = idToUser[_jobId];
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
@@ -90,19 +102,16 @@ contract LilyWrite is ERC721 {
 
     function lilypadCancelled(address _from, uint _jobId, string calldata _errorMsg) external {
         require(_from == address(bridge));
-        address user = idToUser[_jobId];
-        _LWToken.transfer(user, 1e18);
+        // address user = idToUser[_jobId];
+        // _LWToken.transfer(user, 1e18);
+        latestError = _errorMsg;
         delete idToPrompt[_jobId];
         delete idToUser[_jobId];
         emit Cancelled(_from, _jobId, _errorMsg);
     }
 
-    function setBridgeAddress(address _bridgeAddress) external {
-        bridgeAddress = _bridgeAddress;
-    }
-
-    function setLPEventsAddress(address _eventsAddress) external {
-        bridge = LilypadEventsUpgradeable(_eventsAddress);
+    function setTokenURI(uint256 tokenId, string memory _uri) external {
+        _setTokenURI(tokenId, _uri);
     }
 
     function _getLilyPadFee() public view returns(uint256) {
@@ -112,5 +121,28 @@ contract LilyWrite is ERC721 {
 
     function _getLWToken() public view returns(LWToken) {
         return _LWToken;
+    }
+
+    // The following functions are overrides required by Solidity.
+    function _burn(uint256 tokenId) internal override(ERC721, ERC721URIStorage) {
+        super._burn(tokenId);
+    }
+
+    function tokenURI(uint256 tokenId)
+        public
+        view
+        override(ERC721, ERC721URIStorage)
+        returns (string memory)
+    {
+        return super.tokenURI(tokenId);
+    }
+
+    function supportsInterface(bytes4 interfaceId)
+        public
+        view
+        override(ERC721, ERC721URIStorage)
+        returns (bool)
+    {
+        return super.supportsInterface(interfaceId);
     }
 }
