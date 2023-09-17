@@ -14,7 +14,7 @@ function App() {
         radial-gradient(at 100% 97%, rgb(244, 114, 182) 0, transparent 22%)`
       }}>
         <Navbar />
-        <Create />
+        <Shop />
       </div>
   )
 }
