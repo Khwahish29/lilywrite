@@ -1,66 +1,41 @@
-## Foundry
+# How to install, deploy and test the contracts
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+Make a .env file and add the rpc url and private key for Filecoin Calibration Testnet.
 
-Foundry consists of:
+1. Install dependencies
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
-
-## Documentation
-
-https://book.getfoundry.sh/
-
-## Usage
-
-### Build
-
-```shell
-$ forge build
+```bash
+forge install
 ```
 
-### Test
+2. Run tests
 
-```shell
-$ forge test
+```bash
+forge test --fork-url $CALIBRATION_TESTNET_RPC_URL
 ```
 
-### Format
+or
 
-```shell
-$ forge fmt
+```bash
+make test-testnet
 ```
 
-### Gas Snapshots
+3. Deploy contracts
 
-```shell
-$ forge snapshot
+```bash
+make deploy-testnet
 ```
 
-### Anvil
+4. Other things to do
 
-```shell
-$ anvil
+Format the codes
+
+```bash
+make format
 ```
 
-### Deploy
+See test coverage
 
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
+```bash
+forge coverage
 ```

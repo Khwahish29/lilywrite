@@ -13,12 +13,12 @@ contract LWToken is ERC20 {
         owner = msg.sender;
     }
 
-    modifier  onlyOwner {
-        if(msg.sender!=owner) revert  NotOwner();
+    modifier onlyOwner {
+        if(msg.sender!=owner) revert NotOwner();
         _;
     }
 
-    function mint(address to, uint256 amount) public onlyOwner {
+    function mint(address to, uint256 amount) external onlyOwner {
         _mint(to, amount);
     }
 }
