@@ -44,7 +44,7 @@ const Create = () => {
         `}
       </style>
       <div className="h-screen flex flex-col justify-between items-center font-est">
-        <div className="flex-grow flex items-center justify-center -mt-64">
+        <div className="flex-grow flex items-center justify-center mb-20">
           <div className="bg-white p-6 rounded-lg shadow-lg max-w-xl w-full floating">
             <h1 className="text-3xl font-semibold text-gray-800 mb-4">The Road Not Taken</h1>
             <div className="mt-6">
@@ -67,7 +67,7 @@ const Create = () => {
             </div>
           </div>
         </div>
-        <div className="w-full flex justify-center items-center pb-32">
+        <div className="w-full flex justify-center items-center pb-32 mt-8">
         <select onChange={handleBasisChange} value={poemBasis} className="mb-4 rounded-md py-2 px-4 -mt-32 mr-8 border-2 border-[#111827]">
             <option value="default">Select Basis</option>
             <option value="emotion">Emotion</option>
