@@ -2,15 +2,15 @@
 pragma solidity 0.8.19;
 
 import {Script} from "forge-std/Script.sol";
-import {LilyWrite} from "../src/LilyWrite.sol";
+import {LilyWrite} from "../src/LilyWriteV2.sol";
 
 contract DeployLilyWrite is Script {
 
-    address constant LilypadEvents =  0xdC7612fa94F098F1d7BB40E0f4F4db8fF0bC8820;
+    address constant MODICUM =  0x422F325AA109A3038BDCb7B03Dd0331A4aC2cD1a;
 
     function run() public returns(LilyWrite) {
         vm.startBroadcast();
-        LilyWrite lilywrite = new LilyWrite(LilypadEvents);
+        LilyWrite lilywrite = new LilyWrite(MODICUM);
         vm.stopBroadcast();
         return lilywrite;
     }
