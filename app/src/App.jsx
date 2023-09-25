@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import Landing from './components/Landing'
 import Navbar from './components/Navbar'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Shop from './components/Shop'
 import Explore from './components/Explore'
 import Create from './components/Create'
+
 function App() {
   return (
       <div className='min-h-screen' style={{
@@ -13,8 +15,15 @@ function App() {
         radial-gradient(at 100% 64%, rgb(192, 132, 252) 0, transparent 26%), 
         radial-gradient(at 100% 97%, rgb(244, 114, 182) 0, transparent 22%)`
       }}>
-        <Navbar />
-        <Create />
+        <Router>
+          <Navbar />
+            <Routes>
+              <Route path='/' element={<Landing />} />
+              <Route path='/explore' element={<Explore />} />
+              <Route path='/shop' element={<Shop />} />
+              <Route path='/create' element={<Create />} />
+            </Routes>
+        </Router>
       </div>
   )
 }
