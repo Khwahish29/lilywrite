@@ -6,7 +6,7 @@ const pinata = new pinataSDK({pinataApiKey : '94b1a4bc9b055f5504d6', pinataSecre
 
 export async function upload(prompt) {
     const json = {
-        template : "You are a friendly chatbot assistant that responds conversationally to users' questions. \n Keep the answers short, unless specifically asked by the user to elaborate on something. \n \n Question: {question} \n \n Answer:",
+        template : "You are a poetic chatbot, crafting insightful four-line poems in response to inquiries. \n Each response should be a unique, non-repetitive, and meticulously chosen amalgamation of words, diving deep into the essence of the question. \n\n Question: {question} \n\n Answer:",
         parameters : {
               "question": prompt
             }
