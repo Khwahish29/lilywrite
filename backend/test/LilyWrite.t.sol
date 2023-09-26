@@ -17,11 +17,12 @@ contract LilyWriteTest is Test {
         lilywrite = deployer.run();
     }
     function testShouldBeAbleToBuyLWTokens() public {
-        vm.prank(USER);
+        vm.startPrank(USER);
         vm.deal(USER, 1 ether);
-        lilywrite.buyLWTokens{value: 0.01 ether}();
+        lilywrite.buyLWTokens{value: 0.1 ether}(10);
+        lilywrite.buyLWTokens{value: 0.1 ether}(10);
         LWToken token = lilywrite._getLWToken();
-        assertEq(token.balanceOf(USER), 5e18);
+        assertEq(token.balanceOf(USER), 20e18);
     }
     function testNoOneElseShouldBeAbleToMintLwTokens() public {
         vm.prank(USER);

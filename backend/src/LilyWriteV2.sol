@@ -20,7 +20,7 @@ contract LilyWrite is ERC721, ERC721URIStorage {
     Counters.Counter private _tokenIdCounter;
 
     uint256 public resultJobId;
-    uint256 constant private BUY_PRICE = 0.01 ether;
+    uint256 constant private BASE_PRICE = 0.01 ether;
     address private modicumContractAddress;
     ModicumContract private modicumContract;
     LWToken private _LWToken;
@@ -36,6 +36,8 @@ contract LilyWrite is ERC721, ERC721URIStorage {
     mapping(address => string[]) prompts;
     mapping(address => Poem[]) userPoems;
 
+    Poem[] poems;
+
     //0x422F325AA109A3038BDCb7B03Dd0331A4aC2cD1a
 
     constructor(address _modicumContract) ERC721("LilyWrite", "LW") { 
@@ -45,14 +47,14 @@ contract LilyWrite is ERC721, ERC721URIStorage {
         _LWToken = new LWToken("LWToken", "LW");
     }
 
-    function buyLWTokens() external payable {
-        require(msg.value >= BUY_PRICE, "Send enough tokens!");
-        _LWToken.mint(msg.sender, 5e18);
+    function buyLWTokens(uint256 tokens) external payable {
+        require(msg.value >= tokens * BASE_PRICE, "Send enough tokens!");
+        _LWToken.mint(msg.sender, tokens * 1e18);
     }
 
     function generatePoem(string memory prompt) public payable returns (uint256) {
         require(msg.value >= 2 ether, "Payment of 2 Ether is required");
-        //_LWToken.transferFrom(msg.sender, address(this), 1e18);
+        _LWToken.transferFrom(msg.sender, address(this), 1e18);
         uint256 jobID = modicumContract.runModuleWithDefaultMediators{value: msg.value}("fastchat:v0.0.1", prompt);
         user[jobID] = msg.sender;
         prompts[msg.sender].push(prompt);
@@ -66,25 +68,27 @@ contract LilyWrite is ERC721, ERC721URIStorage {
         string memory latestPrompt = _prompts[_prompts.length - 1];
         Poem memory poem = Poem(latestPrompt, _cid);
         userPoems[user[_jobID]].push(poem);
-        safeMint(user[_jobID]);
+        poems.push(poem);
+        safeMint(user[_jobID], _cid);
     }
 
-    function safeMint(address to) internal {
+    function safeMint(address to, string memory uri) internal{
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
         _safeMint(to, tokenId);
+        _setTokenURI(tokenId, uri);
     }
-
-    function setTokenURI(uint256 tokenId, string memory _uri) external {
-        _setTokenURI(tokenId, _uri);
-    }
-
+    
     function _getLWToken() public view returns(LWToken) {
         return _LWToken;
     }
 
-    function _getPoems(address _user) public view returns (Poem[] memory) {
+    function _getUserPoems(address _user) public view returns (Poem[] memory) {
         return userPoems[_user];
+    }
+
+    function _getPoems() public view returns(Poem[] memory) {
+        return poems;
     }
 
     function _getPrompts(address _user) public view returns(string[] memory) {
