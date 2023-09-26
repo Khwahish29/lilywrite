@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ethers, parseEther } from "ethers";
+import { useNavigate } from 'react-router-dom';
 import { uploadIPFS } from './axiosCalls';
 import lilyAbi from '../../../backend/abi/LilyWriteV2.sol/LilyWrite.json';
 import lwTokenAbi from '../../../backend/abi/LWToken.sol/LWToken.json';
@@ -9,6 +10,7 @@ const Create = () => {
   const ethprovider = new ethers.BrowserProvider(window.ethereum);
   const [signer, setSigner] = useState();
   const [inputText, setInputText] = useState('');
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const textAreaRef = useRef(null);
 
@@ -43,6 +45,7 @@ const Create = () => {
       console.log(tx);
       await tx.wait();
       alert("Poem Generation Submitted Successfully!");
+      navigate('/explore');
       setLoading(false);
       } catch (err) {
         console.log(err);

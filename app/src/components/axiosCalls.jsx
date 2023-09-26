@@ -9,3 +9,10 @@ export const uploadIPFS = async (prompt) => {
     })
     return output.data;
 }
+
+export const getContent = async (cid) => {
+    const output = await axios.get(`http://localhost:8080/fetch/${cid}/`);
+    let parts = output.data.split('}}');
+    let test = parts[1].split('<pad> ');
+    return(test[1].slice(0, test[1].length - 3));
+}
