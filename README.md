@@ -60,3 +60,5 @@ LilyWrite envisions a future filled with enhanced user experiences and diversifi
 LilyWrite is a beacon at the confluence of technology and artistic expression, a revolutionary realm where users weave, own, and cherish unique poems as NFTs. By stepping into LilyWrite, you are partaking in a journey to uphold and elevate the poetic arts in the digital domain. Embrace the symphony of words with LilyWrite!
 
 ---
+
+![Landing](C:\Users\shubh\Downloads\Telegram Desktop\landing.jpg)
