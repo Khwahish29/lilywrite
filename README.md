@@ -7,7 +7,7 @@
 ## 🛠️ Tech Stack
 
 > - **Blockchain:** Lilypad v1 & Solidity + Foundry
-> - **Frontend:** Vite JS (React)
+> - **Frontend:** Vite JS (React) & Pinata SDK
 > - **Backend:** Express JS
 
 ---
@@ -64,6 +64,15 @@ LilyWrite is a beacon at the confluence of technology and artistic expression, a
 ## 📸 Snapshots
 
 ![Landing](https://github.com/Khwahish29/lilywrite/assets/110349596/7f72634d-bcab-4e91-a862-4a0f0d4a705e)
+
+---
+
 ![shop](https://github.com/Khwahish29/lilywrite/assets/110349596/659d63a1-8eaa-445e-93e4-38c58d3298cb)
+
+---
+
 ![explore](https://github.com/Khwahish29/lilywrite/assets/110349596/98968644-12c8-400a-969c-8b9a7229311e)
+
+---
+
 ![create](https://github.com/Khwahish29/lilywrite/assets/110349596/2b6ec342-4f67-440d-992d-6e47820ecb77)
