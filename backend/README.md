@@ -1,6 +1,6 @@
 # How to install, deploy and test the contracts
 
-Make a .env file and add the rpc url and private key for Filecoin Calibration Testnet.
+Make a .env file and add the RPC URL and Private Key for LilyPad Lalechuza Testnet as TESTNET_RPC_URL and PRIVATE_KEY
 
 1. Install dependencies
 
@@ -11,13 +11,13 @@ forge install
 2. Run tests
 
 ```bash
-forge test --fork-url $CALIBRATION_TESTNET_RPC_URL
+forge test
 ```
 
 or
 
 ```bash
-make test-testnet
+make test
 ```
 
 3. Deploy contracts
