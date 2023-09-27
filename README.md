@@ -57,8 +57,7 @@ LilyWrite envisions a future filled with enhanced user experiences and diversifi
 
 ## 🏆 Conclusion
 
-LilyWrite is a beacon at the confluence of technology and artistic expression, a revolutionary realm where users we![landing](https://github.com/Khwahish29/lilywrite/assets/110349596/311f3678-3edc-4177-9c8f-d783582ee3cc)
-ave, own, and cherish unique poems as NFTs. By stepping into LilyWrite, you are partaking in a journey to uphold and elevate the poetic arts in the digital domain. Embrace the symphony of words with LilyWrite!
+LilyWrite is a beacon at the confluence of technology and artistic expression, a revolutionary realm where users weave, own, and cherish unique poems as NFTs. By stepping into LilyWrite, you are partaking in a journey to uphold and elevate the poetic arts in the digital domain. Embrace the symphony of words with LilyWrite!
 
 ---
 ![Landing](https://github.com/Khwahish29/lilywrite/assets/110349596/7f72634d-bcab-4e91-a862-4a0f0d4a705e)
