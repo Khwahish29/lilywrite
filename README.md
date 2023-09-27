@@ -14,8 +14,7 @@
 
 ## 🔗 Links
 
-- [Demo Video]()
-- [Pitch Deck]()
+- [Demo Video](https://youtu.be/S3U7rgvFVgM?si=cF1larTJVsN0--iO)
 
 ---
 
